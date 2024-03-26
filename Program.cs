@@ -40,9 +40,9 @@ namespace InitialProject
             }
 
             int sum = 0;
-            foreach (int num in numbers)
+            foreach (int x in numbers)
             {
-                sum += num;
+                sum += x;
             }
 
             return (double)sum / numbers.Length;
