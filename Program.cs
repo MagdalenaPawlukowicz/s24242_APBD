@@ -6,7 +6,6 @@ namespace InitialProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Witaj!");
             Console.WriteLine("Podaj swoje imię:");
             
             // Pobranie imienia od użytkownika
