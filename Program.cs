@@ -18,7 +18,8 @@ namespace InitialProject
             string surname = Console.ReadLine();
 
             // Wyświetlenie powitania
-            Console.WriteLine($"Witaj, {name} {surname}!");
+            Console.WriteLine("Witaj");
+            Console.WriteLine($"{name} {surname}!");
 
             // Prosta operacja matematyczna
             int a = 5;
