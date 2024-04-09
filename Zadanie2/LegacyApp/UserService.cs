@@ -22,7 +22,7 @@ namespace LegacyApp
             var creditLimit = calculateCreditLimit.CalculateLimit(lastName, dateOfBirth);
             
             user.AssignLimit(creditLimit);
-            if (user.HasCreditLimit && user.CreditLimit < 500)
+            if (user.IsNotSatisfyThreshold(500))
             {
                 return false;
             }

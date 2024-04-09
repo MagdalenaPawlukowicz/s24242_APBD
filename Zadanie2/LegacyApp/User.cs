@@ -35,6 +35,10 @@ namespace LegacyApp
             FirstName = firstName;
             LastName = lastName;
         }
-        
+
+        public bool IsNotSatisfyThreshold(int threshold)
+        {
+            return HasCreditLimit && CreditLimit < threshold;
+        }
     }
 }
