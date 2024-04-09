@@ -17,24 +17,11 @@ namespace LegacyApp
             var client = clientRepository.GetById(clientId);
 
             var user = new User(client, dateOfBirth, email, firstName, lastName);
-
-            if (client.Type == "VeryImportantClient")
-            {
-                user.HasCreditLimit = false;
-            }
-            else if (client.Type == "ImportantClient")
-            {
-                int creditLimit = userCreditService.GetCreditLimit(user.LastName, user.DateOfBirth);
-                creditLimit = creditLimit * 2;
-                user.CreditLimit = creditLimit;
-            }
-            else
-            {
-                user.HasCreditLimit = true;
-                int creditLimit = userCreditService.GetCreditLimit(user.LastName, user.DateOfBirth);
-                user.CreditLimit = creditLimit;
-            }
-
+            
+            var calculateCreditLimit = SelectProperCalculator(client);
+            var creditLimit = calculateCreditLimit.CalculateLimit(lastName, dateOfBirth);
+            
+            user.AssignLimit(creditLimit);
             if (user.HasCreditLimit && user.CreditLimit < 500)
             {
                 return false;
@@ -42,6 +29,16 @@ namespace LegacyApp
 
             UserDataAccess.AddUser(user);
             return true;
+        }
+
+        private ICalculateCreditLimit SelectProperCalculator(Client client)
+        {
+            return client.Type switch
+            {
+                "VeryImportantClient" => new NoLimitCalculator(),
+                "ImportantClient" => new ExtraCalculator(userCreditService),
+                _ => new SimpleCalculator(userCreditService)
+            };
         }
 
         private static int CalculateAge(DateTime dateOfBirth)
