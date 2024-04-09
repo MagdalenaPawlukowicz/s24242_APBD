@@ -10,8 +10,19 @@ namespace LegacyApp
         public string FirstName { get; internal set; }
         public string LastName { get; internal set; }
         public bool HasCreditLimit { get; internal set; }
+
         public int CreditLimit { get; internal set; }
-        
+
+        public void AssignLimit(int limit)
+        {
+            if (limit > 0)
+            {
+                HasCreditLimit = true;
+            }
+
+            CreditLimit = limit;
+        }
+
         public User()
         {
         }
