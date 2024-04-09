@@ -4,12 +4,6 @@ namespace LegacyApp
 {
     public class UserService
     {
-        private readonly ICreditLimitStrategy _creditLimitStrategy;
-
-        public UserService(ICreditLimitStrategy creditLimitStrategy)
-        {
-            _creditLimitStrategy = creditLimitStrategy;
-        }
 
         public bool AddUser(string firstName, string lastName, string email, DateTime dateOfBirth, int clientId)
         {
