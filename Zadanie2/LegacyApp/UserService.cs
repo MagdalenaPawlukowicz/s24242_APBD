@@ -10,7 +10,7 @@ namespace LegacyApp
         
         public bool AddUser(string firstName, string lastName, string email, DateTime dateOfBirth, int clientId)
         {
-            if (!ValidateFullName(firstName, lastName) || !ValidateEmail(email) || !ValidateAge(dateOfBirth))
+            if (!ValidateFullName(firstName, lastName) || !ValidateEmail(email) || !ValidateAge(dateOfBirth, 21))
                 return false;
 
             var clientRepository = new ClientRepository();
@@ -59,10 +59,10 @@ namespace LegacyApp
             return !string.IsNullOrEmpty(email) && (email.Contains("@") || email.Contains("."));
         }
 
-        private bool ValidateAge(DateTime dateOfBirth)
+        private bool ValidateAge(DateTime dateOfBirth, int ageThreshold)
         {
             int age = CalculateAge(dateOfBirth);
-            return age >= 21;
+            return age >= ageThreshold;
         }
     }
 }
