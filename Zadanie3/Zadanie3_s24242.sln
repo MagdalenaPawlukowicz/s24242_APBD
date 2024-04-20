@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zadanie3_s24242", "Zadanie3_s24242\Zadanie3_s24242.csproj", "{E4A9A5DF-7E2A-4619-915C-F35F967A39D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zadanie3_s24242", "Zadanie3_s24242.csproj", "{E4A9A5DF-7E2A-4619-915C-F35F967A39D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
