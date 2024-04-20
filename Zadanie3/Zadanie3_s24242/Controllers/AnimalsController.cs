@@ -53,5 +53,33 @@ public class AnimalsController : ControllerBase
             return StatusCode(500, $"Wystąpił błąd podczas dodawania zwierzęcia: {ex.Message}");
         }
     }
+    
+    [HttpPut("{idAnimal}")]
+    public ActionResult UpdateAnimal(int idAnimal, Animal updatedAnimal)
+    {
+        try
+        {
+            var animals = _animalsRepository.GetRepoAnimals();
+            var existingAnimal = animals.FirstOrDefault(a => a.IdAnimal == idAnimal);
+
+            if (existingAnimal == null)
+            {
+                return NotFound("Zwierzę o podanym identyfikatorze nie zostało znalezione.");
+            }
+
+            existingAnimal.Name = updatedAnimal.Name;
+            existingAnimal.Description = updatedAnimal.Description;
+            existingAnimal.Category = updatedAnimal.Category;
+            existingAnimal.Area = updatedAnimal.Area;
+
+            _animalsRepository.UpdateAnimal(existingAnimal);
+
+            return Ok("Zwierzę zaktualizowane pomyślnie.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Wystąpił błąd podczas aktualizacji zwierzęcia: {ex.Message}");
+        }
+    }
 
 }
