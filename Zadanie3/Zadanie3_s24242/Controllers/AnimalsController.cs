@@ -39,5 +39,19 @@ public class AnimalsController : ControllerBase
 
         return animals;
     }
+    
+    [HttpPost]
+    public ActionResult AddAnimal([FromBody] Animal newAnimal)
+    {
+        try
+        {
+            _animalsRepository.AddAnimal(newAnimal);
+            return Ok("Zwierzę dodane pomyślnie.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Wystąpił błąd podczas dodawania zwierzęcia: {ex.Message}");
+        }
+    }
 
 }
