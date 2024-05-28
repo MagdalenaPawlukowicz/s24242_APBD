@@ -1,0 +1,198 @@
+@Zadanie6_HostAddress = http://localhost:5108
+
+GET {{Zadanie6_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+### Successfull added prescription for existing patient
+POST {{Zadanie6_HostAddress}}/api/Visit/AddPrescription
+Content-Type: application/json
+
+{
+  "idPatient" : "1",
+  "FirstName": "sd",
+  "LastName": "strsdding",
+  "BirthDate": "1984-03-04T05:21:54Z",
+  "DoctorId": 1,
+  "Medicaments": [
+    {
+      "IdMedicament": 1,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 2,
+      "Dose": 221,
+      "Description": "Use as needed"
+    }
+  ],
+  "Date": "2024-05-06T15:41:03Z",
+  "DueDate": "2024-06-23T22:13:54Z"
+}
+
+### Successfull added prescription and created patient
+POST {{Zadanie6_HostAddress}}/api/Visit/AddPrescription
+Content-Type: application/json
+
+{
+  "FirstName": "test",
+  "LastName": "testowy",
+  "BirthDate": "1984-03-04T05:21:54Z",
+  "DoctorId": 1,
+  "Medicaments": [
+    {
+      "IdMedicament": 1,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 2,
+      "Dose": 221,
+      "Description": "Use as needed"
+    }
+  ],
+  "Date": "2024-05-06T15:41:03Z",
+  "DueDate": "2024-06-23T22:13:54Z"
+}
+
+###Not existing medicament
+POST {{Zadanie6_HostAddress}}/api/Visit/AddPrescription
+Content-Type: application/json
+
+{
+  "FirstName": "test",
+  "LastName": "testowy",
+  "BirthDate": "1984-03-04T05:21:54Z",
+  "DoctorId": 1,
+  "Medicaments": [
+    {
+      "IdMedicament": 999,
+      "Dose": 671,
+      "Description": "Use as needed"
+    }
+  ],
+  "Date": "2024-05-06T15:41:03Z",
+  "DueDate": "2024-06-23T22:13:54Z"
+}
+> {%
+    client.test("Medicament doesn't exist", function () {
+        client.assert(response.status === 400, "Response status is not 400");
+    });
+%}
+
+
+###Too many medicament
+POST {{Zadanie6_HostAddress}}/api/Visit/AddPrescription
+Content-Type: application/json
+
+{
+  "patientId" : "2",
+  "FirstName": "sd",
+  "LastName": "strsdding",
+  "BirthDate": "1984-03-04T05:21:54Z",
+  "DoctorId": 1,
+  "Medicaments": [
+    {
+      "IdMedicament": 1,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 2,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 3,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 4,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 5,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 6,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 7,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 8,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 9,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 10,
+      "Dose": 671,
+      "Description": "Use as needed"
+    },
+    {
+      "IdMedicament": 11,
+      "Dose": 671,
+      "Description": "Use as needed"
+    }
+  ],
+  "Date": "2024-05-06T15:41:03Z",
+  "DueDate": "2024-06-23T22:13:54Z"
+}
+> {%
+    client.test("Too many medicament", function () {
+        client.assert(response.status === 400, "Response status is not 400");
+    });
+%}
+
+### Date over due date
+POST {{Zadanie6_HostAddress}}/api/Visit/AddPrescription
+Content-Type: application/json
+
+{
+  "patientId" : "2",
+  "FirstName": "sd",
+  "LastName": "strsdding",
+  "BirthDate": "1984-03-04T05:21:54Z",
+  "DoctorId": 1,
+  "Medicaments": [
+    {
+      "IdMedicament": 1,
+      "Dose": 671,
+      "Description": "Use as needed"
+    }
+  ],
+  "Date": "2024-09-06T15:41:03Z",
+  "DueDate": "2024-06-23T22:13:54Z"
+}
+> {%
+    client.test(" Date over due date", function () {
+        client.assert(response.status === 400, "Response status is not 400");
+    });
+%}
+
+
+### Get existing patient
+GET {{Zadanie6_HostAddress}}/api/Visit/GetPatientData/1
+
+### Shouldnt find patient
+GET {{Zadanie6_HostAddress}}/api/Visit/GetPatientData/666
+
+> {%
+    client.test("Not existing patient", function () {
+        client.assert(response.status === 404, "Response status is not 404");
+    });
+%}
